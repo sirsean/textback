@@ -22,25 +22,11 @@ func main() {
 
 	go run.Start()
 
-	//err := sms.Send("7735048753", "this is a test message")
-	//log.Printf("sms err %v", err)
-	//return
-
-	//mongo.Connect()
-
-	//go store.StartCleaning()
-
 	mainRouter := mux.NewRouter()
-	//router.HandleFunc("/", controller.Index).Methods("GET")
-	//router.HandleFunc("/doc/{id}", controller.ShowDocument).Methods("GET")
-
-	//router.HandleFunc("/api/docs", api.ListDocuments).Methods("GET")
 
 	smsRouter := mux.NewRouter()
 	smsRouter.HandleFunc("/sms/inbound", sms.Inbound).Methods("POST")
 	mainRouter.Handle("/sms/{.*}", smsRouter)
-
-	// TODO see adescaper-adserver for router tips
 
 	port := config.Get().Host.Port
 	log.Printf("Serving on port %v", port)
