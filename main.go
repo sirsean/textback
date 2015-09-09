@@ -2,7 +2,6 @@ package main
 
 import (
 	"github.com/gorilla/mux"
-	"github.com/sirsean/textback/config"
 	"github.com/sirsean/textback/redis"
 	"github.com/sirsean/textback/run"
 	"github.com/sirsean/textback/sms"
@@ -28,7 +27,5 @@ func main() {
 	smsRouter.HandleFunc("/sms/inbound", sms.Inbound).Methods("POST")
 	mainRouter.Handle("/sms/{.*}", smsRouter)
 
-	port := config.Get().Host.Port
-	log.Printf("Serving on port %v", port)
-	log.Fatal(http.ListenAndServe(port, mainRouter))
+	log.Fatal(http.ListenAndServe(":80", mainRouter))
 }
